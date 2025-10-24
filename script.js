@@ -72,8 +72,23 @@ function checkAnswer(){
     }
   });
   if(found){message.textContent="✅ Doğru!";}
-  else{lives--;livesDisplay.textContent=lives;message.textContent=`❌ Yanlış (${lives} hak kaldı)`;}
-  input.value="";if(revealedAnswers.every(a=>a))nextButton();else if(lives<=0){revealRemaining();nextButton();}
+  else {
+  lives--;
+  if (lives < 0) lives = 0; // ❗ Hak 0’ın altına düşmesin
+  livesDisplay.textContent = lives;
+  message.textContent = `❌ Yanlış (${lives} hak kaldı)`;
+}
+
+input.value = "";
+
+// ❗ 0 olunca artık yeni tahmin kabul etme, hemen sonraki soruya geç
+if (revealedAnswers.every(a => a)) {
+  nextButton();
+} else if (lives === 0) {
+  revealRemaining();
+  nextButton();
+}
+
 }
 function revealRemaining(){const q=questions[currentQuestionIndex];q.answers.forEach((ans,i)=>{if(!revealedAnswers[i]){const box=answersContainer.children[i];box.textContent=`${ans.text.toUpperCase()} (+${ans.points})`;box.classList.add("revealed");}});}
 function nextButton(){message.innerHTML+="<br><button id='nextQ' class='btn-primary' style='width:auto;margin-top:8px'>Sonraki Soru</button>";document.getElementById("nextQ").onclick=nextQuestion;}
