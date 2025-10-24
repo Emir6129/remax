@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kayıt Ol — RE/MAX Türkiye</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --remax-red:#e31b23;
+      --remax-blue:#0033a0;
+      --muted:#6b7280;
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial;
+      background: linear-gradient(180deg,#f5f8ff 0%, #ffffff 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:#111827;
+    }
+    .card{
+      width:100%;
+      max-width:460px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,250,0.95));
+      border-radius:16px;
+      padding:28px;
+      box-shadow: 0 12px 40px rgba(3,34,119,0.08);
+    }
+    .brand{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+    .logo{
+      width:62px;height:62px;border-radius:12px;
+      background:linear-gradient(135deg,var(--remax-red),var(--remax-blue));
+      display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;
+      box-shadow: 0 8px 24px rgba(3,34,119,0.12);
+    }
+    h1{margin:0;font-size:20px}
+    p.lead{margin:4px 0 16px;color:var(--muted);font-size:13px}
+    form{display:flex;flex-direction:column;gap:12px}
+    label{font-size:13px;color:#374151;font-weight:600}
+    input[type="text"]{
+      padding:12px 14px;border-radius:10px;border:1px solid #e6e9ef;font-size:14px;outline:none;
+    }
+    input[type="text"]:focus{box-shadow:0 6px 18px rgba(3,34,119,0.06);border-color:var(--remax-blue)}
+    .btn{
+      border:0;padding:12px 14px;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;
+      background:linear-gradient(90deg,var(--remax-blue),var(--remax-red));color:#fff;
+      box-shadow: 0 10px 28px rgba(3,34,119,0.12);
+    }
+    .muted{color:var(--muted);font-size:13px;text-align:center;margin-top:10px}
+    @media (max-width:480px){.card{padding:20px}}
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="brand">
+      <div class="logo">RE</div>
+      <div>
+        <h1>RE/MAX Türkiye — Kayıt Ol</h1>
+        <p class="lead">Oyun ve araçlara erişmek için lütfen bilgilerinizi kaydedin.</p>
+      </div>
+    </div>
+
+    <form id="signupForm" action="index.html" method="GET" onsubmit="return false;">
+      <div>
+        <label for="fullname">Ad Soyad</label>
+        <input id="fullname" name="fullname" type="text" placeholder="Örn: Ahmet Yılmaz" required />
+      </div>
+
+      <div>
+        <label for="office">Ofis Adı</label>
+        <input id="office" name="office" type="text" placeholder="Örn: RE/MAX Emlak Ofisi" required />
+      </div>
+
+      <div style="margin-top:6px">
+        <button id="registerBtn" class="btn">Kayıt Ol</button>
+      </div>
+    </form>
+
+    <div class="muted">Zaten kayıtlıysan <a href="index.html" style="color:var(--remax-blue);text-decoration:none;font-weight:600">Ana sayfaya git</a></div>
+  </main>
+
+  <script>
+    document.getElementById('registerBtn').addEventListener('click', function(){
+      const name = document.getElementById('fullname').value.trim();
+      const office = document.getElementById('office').value.trim();
+      if(!name || !office){
+        alert('Lütfen tüm alanları doldurun.');
+        return;
+      }
+      try{
+        localStorage.setItem('remax_kayit_fullname', name);
+        localStorage.setItem('remax_kayit_office', office);
+      }catch(err){
+        console.warn('localStorage-access hata', err);
+      }
+      // index.html'e yönlendir
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
